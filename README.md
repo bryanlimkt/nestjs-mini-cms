@@ -79,16 +79,35 @@ Nest is [MIT licensed](LICENSE).
 1. `npm install ts-node --save-dev`
 1. `npm i @nestjs/typeorm typeorm sqlite3`
 1. In `AppModule` add 
-  ```
-  imports: [GraphQLModule.forRoot({
-  autoSchemaFile: join(process.cwd(),'src/schema.gql'),
-  driver: ApolloDriver,
-  }), ... other modules]
-  ```
+    ```
+    imports: [GraphQLModule.forRoot({
+    autoSchemaFile: join(process.cwd(),'src/schema.gql'),
+    driver: ApolloDriver,
+    }), ... other modules]
+    ```
 1. And also
-  ```
-  imports: [{TypeOrmModule.forRoot(config)}, ... other modules]
-  ```
-1. Create a config 
+    ```
+    imports: [{TypeOrmModule.forRoot(config)}, ... other modules]
+    ```
+1. Create a config file for above step
+    ```
+    const config: SqliteConnectionOptions = {
+      type: 'sqlite',
+      database: ':memory:',
+      entities: ['dist/**/*.entity{.ts,.js}'],
+      synchronize: false 
+    }
+
+    export default config
+    ```
+1. Add this to the rules obejct in `eslintrc` file
+    ```
+    'prettier/prettier': [
+      'error',
+      {
+        'endOfLine': 'auto',
+      }
+    ]
+    ```
 1. Create a `User` resource using `nest g resource users` in users microservice (GraphQL - code first)
 1. Create a `Loans` resource using `nest g resource loans` in loans microservice (GraphQL - code first)
