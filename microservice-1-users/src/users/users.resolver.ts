@@ -3,6 +3,7 @@ import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
+import { FindAllUsersInput } from './dto/find-all-users.input';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -14,22 +15,27 @@ export class UsersResolver {
   }
 
   @Query(() => [User], { name: 'users' })
-  findAll() {
-    return this.usersService.findAll();
+  findAll(
+    @Args('findAllUsersInput', { nullable: true })
+    findAllUsersInput: FindAllUsersInput,
+  ) {
+    return findAllUsersInput
+      ? this.usersService.findAll(findAllUsersInput)
+      : this.usersService.findAll();
   }
 
   @Query(() => User, { name: 'user' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.usersService.findOne(id);
+  findOne(@Args('uuid') uuid: string) {
+    return this.usersService.findOne(uuid);
   }
 
   @Mutation(() => User)
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-    return this.usersService.update(updateUserInput.id, updateUserInput);
+    return this.usersService.update(updateUserInput);
   }
 
   @Mutation(() => User)
-  removeUser(@Args('id', { type: () => Int }) id: number) {
-    return this.usersService.remove(id);
+  removeUser(@Args('uuid') uuid: string) {
+    return this.usersService.remove(uuid);
   }
 }

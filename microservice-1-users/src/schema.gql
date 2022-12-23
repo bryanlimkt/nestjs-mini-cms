@@ -1,0 +1,59 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  uuid: String!
+  firstName: String!
+  lastName: String!
+  dateOfBirth: DateTime!
+  addressLine1: String!
+  addressLine2: String
+  created: DateTime!
+  updated: DateTime!
+  isDeleted: Boolean!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  users(findAllUsersInput: FindAllUsersInput): [User!]!
+  user(uuid: String!): User!
+}
+
+input FindAllUsersInput {
+  firstName: String
+  lastName: String
+  dateOfBirth: DateTime
+  addressLine1: String
+  addressLine2: String
+  uuid: String
+  isDeleted: Boolean
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(uuid: String!): User!
+}
+
+input CreateUserInput {
+  firstName: String!
+  lastName: String!
+  dateOfBirth: DateTime!
+  addressLine1: String!
+  addressLine2: String
+}
+
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  dateOfBirth: DateTime
+  addressLine1: String
+  addressLine2: String
+  uuid: String!
+  isDeleted: Boolean
+}
