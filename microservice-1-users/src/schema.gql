@@ -55,5 +55,4 @@ input UpdateUserInput {
   addressLine1: String
   addressLine2: String
   uuid: String!
-  isDeleted: Boolean
 }

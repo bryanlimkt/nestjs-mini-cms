@@ -10,32 +10,36 @@ export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
   @Mutation(() => User)
-  createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
+  createUser(
+    @Args('createUserInput') createUserInput: CreateUserInput,
+  ): Promise<User> | undefined {
     return this.usersService.create(createUserInput);
   }
 
   @Query(() => [User], { name: 'users' })
   findAll(
     @Args('findAllUsersInput', { nullable: true })
-    findAllUsersInput: FindAllUsersInput,
-  ) {
+    findAllUsersInput?: FindAllUsersInput,
+  ): Promise<User[]> | undefined {
     return findAllUsersInput
       ? this.usersService.findAll(findAllUsersInput)
       : this.usersService.findAll();
   }
 
   @Query(() => User, { name: 'user' })
-  findOne(@Args('uuid') uuid: string) {
+  findOne(@Args('uuid') uuid: string): Promise<User> | undefined {
     return this.usersService.findOne(uuid);
   }
 
   @Mutation(() => User)
-  updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
+  updateUser(
+    @Args('updateUserInput') updateUserInput: UpdateUserInput,
+  ): Promise<User> | undefined {
     return this.usersService.update(updateUserInput);
   }
 
   @Mutation(() => User)
-  removeUser(@Args('uuid') uuid: string) {
+  removeUser(@Args('uuid') uuid: string): Promise<User> | undefined {
     return this.usersService.remove(uuid);
   }
 }

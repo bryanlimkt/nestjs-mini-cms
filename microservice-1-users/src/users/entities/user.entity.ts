@@ -6,13 +6,25 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IsAlpha, IsAlphanumeric, IsBoolean, IsDate } from 'class-validator';
+import {
+  IsAlpha,
+  IsAlphanumeric,
+  IsBoolean,
+  IsDate,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Matches,
+  Validate,
+} from 'class-validator';
+import { isValidAddress } from 'src/custom-validation/validation';
 
 @Entity()
 @ObjectType()
 export class User {
   @Field()
   @PrimaryGeneratedColumn('uuid')
+  @IsUUID()
   uuid!: string;
 
   @IsAlphanumeric()
@@ -26,16 +38,19 @@ export class User {
   lastName!: string;
 
   @IsDate()
-  @Column('datetime')
+  @Column('timestamp without time zone')
   @Field((type) => Date)
   dateOfBirth!: Date;
 
-  @IsAlphanumeric()
+  @IsString()
+  @Validate(isValidAddress)
   @Field()
   @Column()
   addressLine1!: string;
 
-  @IsAlphanumeric()
+  @IsOptional()
+  @IsString()
+  @Validate(isValidAddress)
   @Field({ nullable: true })
   @Column({ nullable: true })
   addressLine2?: string;

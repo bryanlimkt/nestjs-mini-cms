@@ -7,9 +7,4 @@ export class UpdateUserInput extends PartialType(CreateUserInput) {
   @IsUUID()
   @Field()
   uuid!: string;
-
-  @IsOptional()
-  @IsBoolean()
-  @Field((type) => Boolean, { nullable: true })
-  isDeleted?: boolean;
 }
