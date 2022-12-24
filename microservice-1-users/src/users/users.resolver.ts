@@ -4,7 +4,10 @@ import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { FindAllUsersInput } from './dto/find-all-users.input';
+import { LoggingInterceptor } from 'src/interceptors/logging.interceptor';
+import { UseInterceptors } from '@nestjs/common';
 
+@UseInterceptors(LoggingInterceptor)
 @Resolver(() => User)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
